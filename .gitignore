@@ -1,0 +1,23 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+/code_blazers/node_modules
+/code_blazers/.pnp
+/code_blazers/.pnp.js
+
+# testing
+/code_blazers/coverage
+
+# production
+/code_blazers/build
+
+# misc
+/code_blazers/.DS_Store
+/code_blazers/.env.local
+/code_blazers/.env.development.local
+/code_blazers/.env.test.local
+/code_blazers/.env.production.local
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
