@@ -8,7 +8,7 @@ import time
 
 
 
-app=Flask(__name__, static_folder='build',static_url_path='/')
+app=Flask(__name__, static_folder='../build',static_url_path='/')
 @app.route('/verify_projectid',methods=['POST', 'GET'])
 def verify_projectid():
     data = request.get_json()
