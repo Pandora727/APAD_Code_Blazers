@@ -1,37 +1,25 @@
-import './App.css';
-import React, { useState } from 'react';
+import ExistProject from './components/ExistProject';
+import Create_Project from './components/Create_Project';
+import Hardware_Management from './components/Hardware_Management';
+import React from 'react'
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+
 function App() {
-  const [count, setCount] = useState(0)
-  const [fruit, setFruit] = useState(0)
-  function handleClick() {
-
-    const requestOptions = {
-      method: 'GET'
-    }
-    fetch('/api/getter', requestOptions)
-      .then(response => response.json())
-      .then(data => setFruit(data.data_from_backend))
-
-  
-}
-
-
-  return (
-    <div className="App">
-      <p>response:</p>
-      <p>how much fruit:{fruit}</p>
-      <button onClick={handleClick}>click to get</button>
-      <p>{count}</p>
-      <button onClick={() => setCount(count + 1)}>click</button>
-      <form>
-        <label>
-          username: 
-          <input type="text" name="name"></input>
-        </label>
-      </form>
-
-    </div>
+  return (  
+    <Router>
+      <div className="App">
+        <div className="content">
+          <Routes>
+          <Route exact path="/" element={<ExistProject/>} />
+          <Route path="/home/create_new_project" element={<Create_Project/>} />
+          <Route path="/home/hardware_management_page" element={<Hardware_Management />} />
+          </Routes>
+        </div>
+      </div>
+    </Router>
   );
 }
 
 export default App;
+
+
