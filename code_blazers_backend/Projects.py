@@ -45,9 +45,22 @@ class projects:
             "project_id":self.project_id,
             "project_name":self.project_name,
             "project_description":self.project_description,
-            "owner": self.owner
+            "owner": self.owner,
+            "hwset_1": 0,
+            "hwset_2": 0
         }
         self.col.insert_one(document)
+    def get_info(self):
+        data = self.col.find_one({'project_id': self.project_id})
+        data.pop('_id')
+        return  data 
+    
+    def update_resources(self, hwname, qty):
+        self.col.update_one({'project_id': self.project_id},
+                            {'$inc': {hwname: qty}}
+                            )
+        return self.get_info()
+        
     def update_user_project_access(self):
         self.user_accessed = self.owner
         self.col1.update_one({'username': self.user_accessed},

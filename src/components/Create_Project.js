@@ -32,7 +32,9 @@ const Create_Project = () => {
                                 "project_desc":project_desc})
         })    
           .then(response => response.json())
-          .then(data => (data.state !==0) ? setpopup_open(!popup_open): navigate('/home/hardware_management_page'))
+          .then(data => (data.state !==0) ? setpopup_open(!popup_open):
+                                             navigate('/home/hardware_management_page',
+                                             {replace:true, state:{'project_id':project_id} }))
         console.log(pj_state, popup_open);
         setProjectid('') 
         setProjectname('')
