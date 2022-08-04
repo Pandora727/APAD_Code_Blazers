@@ -39,8 +39,12 @@ function  Hardware_Management() {
   {
     default_hwdata();
     window.onpopstate = () =>{
-      navigate('/')
+      navigate('/');
     }
+
+    // window.onpushstate = () =>{
+    //   navigate('/');
+    // }
 
 
   }, [])
@@ -129,8 +133,8 @@ function  Hardware_Management() {
       <br />
 
       <p> Project_ID: {project_details.project_id}  </p>
-      <p> No_hwset1_checked_in: {project_details.hwset_1} </p>
-      <p> No_hwset2_checked_in: {project_details.hwset_2}</p>
+      <p> No_hwset1_checked_out: {project_details.hwset_1} </p>
+      <p> No_hwset2_checked_out: {project_details.hwset_2}</p>
 
       <br />
       <label>
