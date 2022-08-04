@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import Popup from './Popup';
 
 
@@ -74,7 +74,7 @@ const User = () => {
                 })
             })
                 .then(response => response.json())
-                .then(data => (data.state !== 0) ? setpopup_open(!popup_open) : navigate('/home') )
+                .then(data => (data.state !== 0) ? setpopup_open(!popup_open) : navigate('/loginrequest') )
                 setUsename('')
                 setPassword('')
                 setconfirmedPW('')
@@ -113,7 +113,9 @@ const User = () => {
                     <input name="securityA" value={securityA}
                         onChange={(e) => setSecurityA(e.target.value)} required />
                     <br /><br />
-                    <button onClick={handleSubmit} type="submit" class="btn btn-primary"> Create</button>
+                    <button onClick={handleSubmit} type="submit" class="btn btn-primary"> Create  </button>
+                    <br/>
+                    <Link to="/loginrequest" > Existing user? Login here</Link> 
                 </div>
                 <br />
 

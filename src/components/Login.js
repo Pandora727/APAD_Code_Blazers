@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import Popup from './Popup';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 
 function Login() {
@@ -45,24 +45,21 @@ function Login() {
                 }
             )
                 .then(response => response.json())
-                .then(data => (data.state !== 0) ? setpopup_open(!popup_open) : navigate('/home'))
-
-            //If failure then respond with error message
-            //.then(response => setLastName(response['correct']))
-
-            //Success go to next page
-            //.then(data => (data.state !==0) ? setpopup_open(!popup_open): navigate('/home'))
+                
+                // TODO: CHANGE THE NAVIGATE TO EXISTING PROJECT
+                .then(data => (data.state !== 0) ? setpopup_open(!popup_open) : navigate('/Home'))
         }
 
     }
 
     return (
-        <div className="App">
-            <header className="App-header">
+        <div className="container">
+            <header >
                 <form onSubmit={handleLogin}>
-                    <p>
-                        Login:
-                    </p>
+                    <h1>Welcome!</h1>
+                    <h3>Code_Blazers</h3>
+                    <br></br>
+                    <h4>Existing User Login </h4>
                     Username:
                     <br></br>
                     <input type="text" ref={inputName} />
@@ -71,7 +68,9 @@ function Login() {
                     <br></br>
                     <input type="Password" ref={inputPass} />
                     <br></br>
-                    <button type="submit"> Submit </button>
+                    <Link to="/signup" > New User? Sign up </Link> 
+                    <br/>
+                    <button type="submit" class="btn btn-primary"> Login </button>
                     {request_state === 0 && popup_open && <Popup
                         content={<>
                             <p>Please fill out both the username and password </p>
