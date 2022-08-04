@@ -1,6 +1,7 @@
 from flask import Flask, redirect, render_template, send_from_directory, request
 import json
 import pymongo
+from login import Login
 from bson import ObjectId
 from user import User
 app = Flask(__name__, static_folder='build', static_url_path='/')
@@ -22,7 +23,15 @@ def signup():
     return json.dumps({"state": state, "message": "Successfully create the account"})
 
 
-        
+#Login page
+@app.route('/loginrequest', methods=['POST'])
+def login():
+    if request.method == 'POST':
+        data = request.get_json()
+        userlogin = Login()
+        state = userlogin.validate_login(data)
+        return json.dumps({'state':state})
+ 
 
 # {'status': 1,"mes"}
 if __name__ == "__main__":
