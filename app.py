@@ -1,5 +1,3 @@
-from crypt import methods
-from tracemalloc import start
 from flask import Flask, request,send_from_directory
 from project_execute import project_access, create_new_project, get_project_info, update_checkin_checkout
 from hardware import hardware
@@ -20,10 +18,8 @@ CORS(app)
 @cross_origin()
 def verify_projectid():
     data = request.get_json()
-    start_time = time.time()
     print(data['username'], file=sys.stderr)
     flag = project_access(data)
-    print("run_time:", time.time() - start_time, file=sys.stderr)
     if flag:
         print("entered project id:", data['project_id'])
         return json.dumps({'flag': True})
@@ -95,7 +91,7 @@ def serve():
 
 @app.route('/loginrequest', methods=['GET'])
 @cross_origin()
-def serve():
+def loginrequestpage():
     return send_from_directory(app.static_folder, 'index.html')
 
 
