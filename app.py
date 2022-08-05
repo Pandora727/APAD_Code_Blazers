@@ -106,12 +106,12 @@ def projectspage():
 
 @app.route('/projects/create_new_project', methods=['GET'])
 @cross_origin()
-def projectspage():
+def createprojectspage():
     return send_from_directory(app.static_folder, 'index.html')
 
 @app.route('/projects/hardware_management_page', methods=['GET'])
 @cross_origin()
-def projectspage():
+def hardwarepage():
     return send_from_directory(app.static_folder, 'index.html')
 
 @app.route('/home/', methods=['GET'])
@@ -121,7 +121,7 @@ def homepage():
 
 @app.route('/redirect', methods=['GET'])
 @cross_origin()
-def homepage():
+def redirectpage():
     return send_from_directory(app.static_folder, 'index.html')
 
 
