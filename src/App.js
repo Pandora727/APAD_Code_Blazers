@@ -25,7 +25,6 @@ function App() {
           <Route path="/projects/hardware_management_page" element={<Hardware_Management />} />
           <Route path="/home/" element={<ExistProject/>} />
           <Route path='/redirect' element={<DirectBack />} />
-          {/* <Route path="/home/" element={<ExistProject/>} /> */}
           </Routes>
         </div>
       </div>

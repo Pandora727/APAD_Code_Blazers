@@ -1,3 +1,4 @@
+from crypt import methods
 from tracemalloc import start
 from flask import Flask, request,send_from_directory
 from project_execute import project_access, create_new_project, get_project_info, update_checkin_checkout
@@ -91,6 +92,12 @@ def check_out():
 @cross_origin()
 def serve():
     return send_from_directory(app.static_folder, 'index.html')
+
+@app.route('/loginrequest', methods=['GET'])
+@cross_origin()
+def serve():
+    return send_from_directory(app.static_folder, 'index.html')
+
 
 
 # sign up page
