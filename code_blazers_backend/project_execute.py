@@ -7,15 +7,16 @@ def create_new_project(data):
     p_object.set_project_id(data['project_id'])
     p_object.set_project_name(data['project_name'])
     p_object.set_project_description(data['project_desc'])
+    p_object.set_owner(data['owner'])
     
-    state = check_project_availability(p_object)
+    state = check_project_availability(p_object, data['username'])
     if state == 0:
         p_object.create_project()
     return state
    
 
-def check_project_availability(p_object):
-    if p_object.check_project_id() == 1:
+def check_project_availability(p_object, username):
+    if p_object.check_project_id(username) == 1:
         return 1
     elif p_object.check_project_name() == 1:
         return 2
@@ -39,7 +40,7 @@ def update_checkin_checkout(project_id, hwname, qty, flag):
         
 def project_access(data):
     p_object.set_project_id(data['project_id'])
-    return p_object.check_project_id()
+    return p_object.check_project_id(data['username'])
 
 
 

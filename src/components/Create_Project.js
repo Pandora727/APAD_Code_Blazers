@@ -1,7 +1,7 @@
 import React from 'react';
 import {useState} from 'react';
 import Popup from './Popup';
-import {useNavigate} from 'react-router-dom';
+import {useNavigate, useLocation} from 'react-router-dom';
 
 const Create_Project = () => {
   const [project_id, setProjectid] = useState('');
@@ -11,16 +11,18 @@ const Create_Project = () => {
   const [pj_state, setStatevar] = useState(0);
   const navigate = useNavigate();
 
+  const location = useLocation();
+  console.log(location.state);
+
   function handleClick(e) {
     e.preventDefault(); 
-    if ((project_id.trim() === "") || (project_name.trim() === ""))
+    if ((project_id === "") || (project_name === ""))
     {
      console.log("came inside the if block") 
      setStatevar(pj_state + 1);
      setpopup_open(!popup_open);
     }
-    console.log(pj_state, popup_open);
-    if (pj_state === 0)
+    else
       {
         console.log("came inside the if block")
         
@@ -29,11 +31,13 @@ const Create_Project = () => {
           headers: {'Content-Type': 'application/json',},
           body: JSON.stringify({"project_id": project_id, 
                                 "project_name": project_name,
-                                "project_desc":project_desc})
+                                "project_desc":project_desc,
+                                "owner": location.state.username,
+                                 "username": location.state.username})
         })    
           .then(response => response.json())
           .then(data => (data.state !==0) ? setpopup_open(!popup_open):
-                                             navigate('/home/hardware_management_page',
+                                             navigate('/projects/hardware_management_page',
                                              {replace:true, state:{'project_id':project_id} }))
         console.log(pj_state, popup_open);
         setProjectid('') 

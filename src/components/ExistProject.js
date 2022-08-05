@@ -1,7 +1,7 @@
 import React from 'react'
 import { useState} from 'react';
 import Popup from './Popup';
-import {Link, useNavigate} from 'react-router-dom'
+import {Link, useNavigate, useLocation} from 'react-router-dom'
 
 
 
@@ -9,7 +9,11 @@ const ExistProject = () => {
   const [project_id, setProjectid] = useState('');
   const [isOpen, setIsopen] = useState(false);
   const [state, setState] = useState(0);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+
+  const location = useLocation();
+  const username = location.state.username;
+  console.log(username);
 
   function handlesubmit(e) {
         e.preventDefault();  
@@ -22,10 +26,10 @@ const ExistProject = () => {
           fetch('/verify_projectid', {
             method: ['POST'],
             headers: {'Content-Type': 'application/json',},
-            body: JSON.stringify({"project_id": project_id})
+            body: JSON.stringify({"project_id": project_id, "username": location.state.username})
           })    
             .then(response => response.json())
-            .then(data => data.flag ? navigate('/home/hardware_management_page',
+            .then(data => data.flag ? navigate('/projects/hardware_management_page',
                                                {replace:true, state:{'project_id':project_id} }): setIsopen(true))
 
         }    
@@ -61,7 +65,7 @@ const ExistProject = () => {
       </>}
       handleClose={togglePopup}/>}
     <br />
-    <Link to="/home/create_new_project" style={{ 
+    <Link to={"/projects/create_new_project"} state={{username: username}} style={{ 
           color: 'black', 
           borderRadius: '8px' 
         }}>create new Project</Link>

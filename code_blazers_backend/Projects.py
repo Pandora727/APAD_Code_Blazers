@@ -26,12 +26,13 @@ class projects:
         return self.owner
     def set_owner(self,owner):
         self.owner=owner
-    def check_project_id(self):
+    def check_project_id(self, username):
         myquery = { "project_id" : self.project_id }
         print(self.col.count_documents(myquery), file=sys.stderr)
         if (self.col.count_documents(myquery)) <1:
             return 0
         else:
+            self.update_user_project_access(username)
             return 1
     def check_project_name(self):
         myquery = {"project_name" : self.project_name }
@@ -50,6 +51,7 @@ class projects:
             "hwset_2": 0
         }
         self.col.insert_one(document)
+        self.update_user_project_access(self.owner)
     def get_info(self):
         data = self.col.find_one({'project_id': self.project_id})
         data.pop('_id')
@@ -61,8 +63,8 @@ class projects:
                             )
         return self.get_info()
         
-    def update_user_project_access(self):
-        self.user_accessed = self.owner
-        self.col1.update_one({'username': self.user_accessed},
-                            {'$addToSet': {'projects_accessed': self.project_id}}
+    def update_user_project_access(self, username):
+        print(username, file=sys.stderr)
+        self.col1.update_one({'username': username},
+                            {'$addToSet': {'projects_access': self.project_id}}
                             )

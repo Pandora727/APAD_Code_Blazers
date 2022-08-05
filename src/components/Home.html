@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Home Page</title>
+    <style>
+            nav > ul {
+                background-color: rgb(157, 179, 224);
+                list-style: none; /* remove bullet points */
+                margin: 0;
+                padding: 0;
+            }
+
+            nav a {
+                color: inherit; /* remove hyperlink color */
+                display: block; /* expand the effective area to the whole bar */
+                font-size: 1.2rem;
+                padding: 10px;
+                text-decoration: none; /* remove hyperlink underline */
+            }
+
+            /* change background color when the mouse moves to the button */
+            nav a:hover {
+                background-color: rgb(91, 119, 171);
+                color: white;
+            }
+
+            .flex-nav {
+                display: flex; /* make the navigation bar side by side */
+                justify-content: space-evenly /* align to the center */
+            }
+
+            a {
+                color: inherit; /* remove hyperlink color */
+                text-decoration: none; /* remove hyperlink underline */
+            }
+    </style>
+  </head>
+  <body>
+    <nav>
+        <ul class="flex-nav">
+            <li><a href="#">Hardware Page</a></li>
+            <li><a href="#">Project Page</a></li>
+            <li><a href="#">Log Off</a></li>
+        </ul>
+    </nav>
+    
+        <h1>Home Page</h1>
+        <h2>Welcome!</h2>
+        <p>You might want to go to...</p>
+
+        <ul>
+            <li><a href="#">Hardware Page</a></li>
+            <li><a href="#">Project Page</a></li>
+        </ul>
+    
+  </body>
+</html>

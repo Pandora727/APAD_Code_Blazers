@@ -3,6 +3,9 @@ from flask import Flask, request,send_from_directory
 from project_execute import project_access, create_new_project, get_project_info, update_checkin_checkout
 from hardware import hardware
 from hardware_execute import get_hardware_data,checkIn_qty,checkOut_qty,get_hw_availability
+from login import Login 
+from bson import ObjectId
+from user import User
 import json
 import sys
 import time
@@ -14,6 +17,7 @@ app=Flask(__name__, static_folder='../build',static_url_path='/')
 def verify_projectid():
     data = request.get_json()
     start_time = time.time()
+    print(data['username'], file=sys.stderr)
     flag = project_access(data)
     print("run_time:", time.time() - start_time, file=sys.stderr)
     if flag:
@@ -75,6 +79,33 @@ def check_out():
     print(project_details, file=sys.stderr)
     return json.dumps({"state":res,"hwdata":HWData, "project_details": project_details})
 
-@app.route('/')
+
+# Home page
+@app.route('/Home', methods=['GET'])
 def index():
-    return send_from_directory(app.static_folder,'index.html')
+    return 'This is the home page'
+
+
+# sign up page
+@app.route('/signup', methods=['POST'])
+def signup():
+    userInfo = request.get_json()
+    print(userInfo)
+    newuser=User()
+    state = newuser.create_newuser(userInfo)
+    return json.dumps({"state": state, "message": "Successfully create the account"})
+
+
+#Login page
+@app.route('/loginrequest', methods=['POST'])
+def login():
+    if request.method == 'POST':
+        data = request.get_json()
+        newuser=Login()
+        state = newuser.validate_login(data)
+        return json.dumps({'state':state})
+ 
+
+
+
+

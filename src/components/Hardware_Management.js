@@ -144,6 +144,9 @@ function  Hardware_Management() {
         </label>
         <button style={{backgroundColor:'white'}} type="submit" onClick={handleCheckinSubmit}>check in</button>
         <button style={{backgroundColor:'white'}} type="submit" onClick={handleCheckoutSubmit}>check out</button>
+        <br />
+
+        <button style={{backgroundColor:'white'}}  onClick={() => navigate('/projects')}> Back to projects</button>
         {openpopup && <Popup
           content={<>
             <p> Quantity cannot be zero, enter quantity again to check-in/out </p>
