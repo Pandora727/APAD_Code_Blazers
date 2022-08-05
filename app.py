@@ -94,6 +94,38 @@ def serve():
 def loginrequestpage():
     return send_from_directory(app.static_folder, 'index.html')
 
+@app.route('/signup', methods=['GET'])
+@cross_origin()
+def signuppage():
+    return send_from_directory(app.static_folder, 'index.html')
+
+@app.route('/projects', methods=['GET'])
+@cross_origin()
+def projectspage():
+    return send_from_directory(app.static_folder, 'index.html')
+
+@app.route('/projects/create_new_project', methods=['GET'])
+@cross_origin()
+def projectspage():
+    return send_from_directory(app.static_folder, 'index.html')
+
+@app.route('/projects/hardware_management_page', methods=['GET'])
+@cross_origin()
+def projectspage():
+    return send_from_directory(app.static_folder, 'index.html')
+
+@app.route('/home/', methods=['GET'])
+@cross_origin()
+def homepage():
+    return send_from_directory(app.static_folder, 'index.html')
+
+@app.route('/redirect', methods=['GET'])
+@cross_origin()
+def homepage():
+    return send_from_directory(app.static_folder, 'index.html')
+
+
+
 
 
 # sign up page
