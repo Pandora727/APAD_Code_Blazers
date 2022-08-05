@@ -1,19 +1,22 @@
 from tracemalloc import start
 from flask import Flask, request,send_from_directory
-from code_blazers_backend.project_execute import project_access, create_new_project, get_project_info, update_checkin_checkout
-from code_blazers_backend.hardware import hardware
-from code_blazers_backend.hardware_execute import get_hardware_data,checkIn_qty,checkOut_qty,get_hw_availability
-from code_blazers_backend.login import Login 
+from project_execute import project_access, create_new_project, get_project_info, update_checkin_checkout
+from hardware import hardware
+from hardware_execute import get_hardware_data,checkIn_qty,checkOut_qty,get_hw_availability
+from login import Login 
 from bson import ObjectId
-from code_blazers_backend.user import User
+from user import User
+from flask_cors import CORS, cross_origin
 import json
 import sys
 import time
 
 
 
-app=Flask(__name__, static_folder='../build',static_url_path='/')
+app=Flask(__name__, static_folder='build',static_url_path='/')
+CORS(app)
 @app.route('/verify_projectid',methods=['POST', 'GET'])
+@cross_origin()
 def verify_projectid():
     data = request.get_json()
     start_time = time.time()
@@ -28,6 +31,7 @@ def verify_projectid():
     
 
 @app.route('/create_projectid', methods=['POST', 'GET'])
+@cross_origin()
 def project_create():
     print("inside the function",  file=sys.stderr)
     data = request.get_json()
@@ -35,6 +39,7 @@ def project_create():
     return json.dumps({'state':state})
 
 @app.route('/get_hw_data', methods=['GET', 'POST'])
+@cross_origin()
 def get_hw_data_api():
     data = request.get_json()
     HWdata = get_hardware_data(data['hw_name'])
@@ -53,6 +58,7 @@ def get_hw_data_api():
 
 
 @app.route('/check_in', methods=['GET','POST'])
+@cross_origin()
 def check_in():
     print("in check in")
     data = request.get_json()
@@ -68,6 +74,7 @@ def check_in():
 
 
 @app.route('/check_out', methods=['GET','POST'])
+@cross_origin()
 def check_out():
     print("in check out", file=sys.stderr)
     data = request.get_json()
@@ -81,12 +88,14 @@ def check_out():
 
 
 @app.route('/')
+@cross_origin()
 def serve():
     return send_from_directory(app.static_folder, 'index.html')
 
 
 # sign up page
 @app.route('/signup', methods=['POST'])
+@cross_origin()
 def signup():
     userInfo = request.get_json()
     print(userInfo)
@@ -97,6 +106,7 @@ def signup():
 
 #Login page
 @app.route('/loginrequest', methods=['POST'])
+@cross_origin()
 def login():
     if request.method == 'POST':
         data = request.get_json()

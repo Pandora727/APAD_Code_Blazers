@@ -1,6 +1,5 @@
 import pymongo
-import sys
-class projects:
+class Projects:
     def __init__(self) -> None:
         self.project_id = ''
         self.project_name = ''
@@ -28,7 +27,6 @@ class projects:
         self.owner=owner
     def check_project_id(self, username):
         myquery = { "project_id" : self.project_id }
-        print(self.col.count_documents(myquery), file=sys.stderr)
         if (self.col.count_documents(myquery)) <1:
             return 0
         else:
@@ -36,7 +34,6 @@ class projects:
             return 1
     def check_project_name(self):
         myquery = {"project_name" : self.project_name }
-        print("avail:", self.col.count_documents(myquery))
         if (self.col.count_documents(myquery)) < 1:
             return 0
         else:
@@ -64,7 +61,9 @@ class projects:
         return self.get_info()
         
     def update_user_project_access(self, username):
-        print(username, file=sys.stderr)
         self.col1.update_one({'username': username},
                             {'$addToSet': {'projects_access': self.project_id}}
                             )
+
+if __name__=="__main__":
+    pass

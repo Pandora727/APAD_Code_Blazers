@@ -1,8 +1,8 @@
 import pymongo
-from Projects import projects
+from Projects import Projects
 
 
-p_object = projects()
+p_object = Projects()
 def create_new_project(data):
     p_object.set_project_id(data['project_id'])
     p_object.set_project_name(data['project_name'])
