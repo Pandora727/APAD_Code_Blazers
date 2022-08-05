@@ -22,11 +22,14 @@ class Login:
 
     def validate_login(self, data):
         self.pass_Word = data['password']
+        print(data['password'])
         pwd = self.encrypt()
+        print(pwd)
         document = self.col1.find_one({"username": data['username']})
         if document:
-
+            print(document['password'])
             if (document['password'] == pwd):
+                
                 return 0
             return 2
         return 3

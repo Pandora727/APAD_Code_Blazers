@@ -1,6 +1,6 @@
 import './App.css';
 import User from './components/User';
-// import Home from './components/Home';
+import DirectBack from './components/DirectBack';
 import Login from './components/Login';
 
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
@@ -14,6 +14,7 @@ function App() {
           <Routes>
             <Route path='/' element={<Login />}/>
             <Route path='/loginrequest' element={<Login />}/>
+            <Route path='/redirect' element={<DirectBack />} />
             <Route path="/signup" element={<User />}/>
           </Routes>
         </div>

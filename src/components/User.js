@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom';
 import Popup from './Popup';
+// import DirectBack from './DirectBack';
 
 
 const User = () => {
@@ -19,6 +20,7 @@ const User = () => {
     const [securityQ, setSecurityQ] = useState('hometown')
     const [popup_open, setpopup_open] = useState(false)
     const [registerState, setRegisterstate] = useState(0)
+    const [existingUsername, setexistingUsername] = useState(0)
     const navigate = useNavigate();
 
 
@@ -81,13 +83,13 @@ const User = () => {
                     "projects_access": []
                 })
             })
-                .then(response => response.json())
-                .then(data => (data.state !== 0) ? setpopup_open(!popup_open) : navigate('/loginrequest'))
-            setUsename('')
-            setPassword('')
-            setconfirmedPW('')
-            setSecurityQ('')
-            setSecurityA('')
+                .then(response => response.json() )
+                .then(data => (data.state !== 0) ? [setpopup_open(!popup_open),setexistingUsername(1)] : navigate('/redirect')) 
+            // setUsename('')
+            // setPassword('')
+            // setconfirmedPW('')
+            // setSecurityQ('')
+            // setSecurityA('')
         }
 
     }
@@ -127,7 +129,11 @@ const User = () => {
                 </div>
                 <br />
 
+                {existingUsername === 1 && popup_open && <Popup content={
+                    <>
+                        <p>Username already existed. Try other names</p>
 
+                    </>} handleClose={togglePopup} />}
                 {registerState === 1 && popup_open && <Popup content={
                     <>
                         <p>* All fields are required</p>

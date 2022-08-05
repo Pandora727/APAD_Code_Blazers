@@ -19,7 +19,8 @@ class User:
         pass
 
     def check_existed_user(self):
-        if self.col1.find_one({'username': self.username}):
+        if self.col1.count_documents({'username': self.username}) != 0:
+
             return 1
         else:
             return 0
@@ -36,8 +37,9 @@ class User:
         self.pwd = data['password']
         self.securityQ = data['security_question']
         self.securityA = data['security_answer']
-
-        if self.check_existed_user == 1:
+        print("inside check user",self.check_existed_user())
+        if self.check_existed_user() == 1:
+            
             return 1
         else:
             self.col1.insert_one({

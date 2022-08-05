@@ -1,6 +1,6 @@
 from flask import Flask, redirect, render_template, send_from_directory, request
 import json
-import pymongo
+import pymongo, sys
 from login import Login
 from bson import ObjectId
 from user import User
@@ -20,6 +20,7 @@ def signup():
     print(userInfo)
     newuser = User()
     state = newuser.create_newuser(userInfo)
+    print("in app.py --", state)
     return json.dumps({"state": state, "message": "Successfully create the account"})
 
 
@@ -29,9 +30,11 @@ def login():
     if request.method == 'POST':
         data = request.get_json()
         userlogin = Login()
+        # print(data['username'], data['password'], file=sys.stderr)
         state = userlogin.validate_login(data)
         return json.dumps({'state':state})
  
+
 
 # {'status': 1,"mes"}
 if __name__ == "__main__":
