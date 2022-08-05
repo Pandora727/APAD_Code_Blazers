@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom';
 import Popup from './Popup';
 
-
 const User = () => {
     // user setup
     const securityQs = [
@@ -21,6 +20,8 @@ const User = () => {
     const [registerState, setRegisterstate] = useState(0)
     const navigate = useNavigate();
 
+    const [existingUsername, setexistingUsername] = useState(0)
+
 
     const togglePopup = () => {
         setpopup_open(!popup_open);
@@ -31,37 +32,45 @@ const User = () => {
     function handleSubmit(e) {
         e.preventDefault();
         console.log("You click the submit button")
-        
-        // username
-        if ((!username > 3 && !username < 25)) {
-            // popup -- "the username should be between 0 and 15 and should contain only upper and lowercase letters, numbers, and underscores "
-            // toggle 
+
+        if (username.trim() === '' || password.trim() === '' || confirmedPW.trim() === '' || securityA.trim() === '') {
+            //Print error message
             setRegisterstate(1);
             setpopup_open(!popup_open);
         }
 
-        // password
-        if (!password.length >= 6 && !password.length <= 20) {
-            // popup -- "the password should be between "
-            setRegisterstate(1);
+        // username
+        else if ((!username > 3 && !username < 25)) {
+            // popup -- "the username should be between 0 and 15 and should contain only upper and lowercase letters, numbers, and underscores "
+            // toggle 
+            setRegisterstate(2);
             setpopup_open(!popup_open);
         }
 
         // confirmedpw
-        if (confirmedPW !== password) {
+        else if (confirmedPW !== password) {
             // popup -- "Passwords does not match. Please try again"
-            setRegisterstate(1);
+            setRegisterstate(4);
             setpopup_open(!popup_open);
         }
+
+        // password
+        else if (password.length < 6 || password.length >= 20) {
+            // popup -- "the password should be between 6 and 20"
+            setRegisterstate(3);
+            setpopup_open(!popup_open);
+        }
+
 
         // securityA
-        if (!securityA.length > 0 && !securityA.length < 20) {
+        else if (securityA.length <= 0 || securityA.length > 20) {
             // popup -- "The security answer should be between 0 and 20 characters"
-            setRegisterstate(1);
+            setRegisterstate(5);
             setpopup_open(!popup_open);
         }
 
-        if (registerState === 0) {
+        else {
+
             fetch('/signup', {
                 method: ['POST'],
                 headers: { 'Content-Type': 'application/json', },
@@ -74,23 +83,25 @@ const User = () => {
                 })
             })
                 .then(response => response.json())
-                .then(data => (data.state !== 0) ? setpopup_open(!popup_open) : navigate('/loginrequest') )
-                setUsename('')
-                setPassword('')
-                setconfirmedPW('')
-                setSecurityQ('')
-                setSecurityA('')
+                .then(data => (data.state !== 0) ? [setpopup_open(!popup_open), setexistingUsername(1)] : navigate('/redirect'))
+            setUsename('')
+            setPassword('')
+            setconfirmedPW('')
+            setSecurityQ('')
+            setSecurityA('')
         }
 
     }
+
 
     return (
 
         <form align="center">
             <title>SignUp</title>
-            <h2>Create your account</h2>
             <div>
                 <div className='container' >
+                    <h2>Create your account</h2>
+                    <br></br>
                     <label>Username:    </label>
                     <input name="username" value={username}
                         onChange={(e) => setUsename(e.target.value)
@@ -114,22 +125,46 @@ const User = () => {
                         onChange={(e) => setSecurityA(e.target.value)} required />
                     <br /><br />
                     <button onClick={handleSubmit} type="submit" class="btn btn-primary"> Create  </button>
-                    <br/>
-                    <Link to="/loginrequest" > Existing user? Login here</Link> 
+                    <br />
+                    <Link to="/loginrequest" > Existing user? Login here</Link>
                 </div>
                 <br />
 
+                {existingUsername === 1 && popup_open && <Popup content={
+                    <>
+                        <p>Username already existed. Try other names</p>
+
+                    </>} handleClose={togglePopup} />}
                 {registerState === 1 && popup_open && <Popup content={
                     <>
                         <p>* All fields are required</p>
-                        <p>The username should be between 0 and 15 and should contain only upper and lowercase letters, numbers, and underscores</p>
-                        <p>The password should be between 6 and 20 and should contain at least one uppercase letter, one number, and one symbol</p>
-                        <p>* Please make sure your passwords match</p>
+
                     </>} handleClose={togglePopup} />}
+
+                {registerState === 2 && popup_open && <Popup
+                    content={<>
+                        <p> * Username should be between 3 and 25  </p>
+                    </>} handleClose={togglePopup} />}
+
+
+                {registerState === 3 && popup_open && <Popup
+                    content={<>
+                        <p> * Password should be between 6 and 20</p>
+                    </>} handleClose={togglePopup} />}
+
+                {registerState === 4 && popup_open && <Popup
+                    content={<>
+                        <p> * Passwords does not match. Please try again</p>
+                    </>} handleClose={togglePopup} />}
+
+                {registerState === 5 && popup_open && <Popup
+                    content={<>
+                        <p> * The security answer should be between 0 and 20 characters</p>
+                    </>} handleClose={togglePopup} />}
+
             </div>
         </form>
 
     )
 }
-
 export default User

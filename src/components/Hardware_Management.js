@@ -142,11 +142,12 @@ function  Hardware_Management() {
         <input type="number" name="Quantity" placeholder ="Quantity" value ={quantity}
          onChange={(e) => {Number.isInteger(setQuantity(e.target.value)) ? setQuantity(e.target.value) : setQuantity(parseInt(e.target.value)) } }/>
         </label>
-        <button style={{backgroundColor:'white'}} type="submit" onClick={handleCheckinSubmit}>check in</button>
-        <button style={{backgroundColor:'white'}} type="submit" onClick={handleCheckoutSubmit}>check out</button>
+        <br />
+        <button  type="submit" onClick={handleCheckinSubmit} class="btn btn-primary">check in</button>
+        <button  type="submit" onClick={handleCheckoutSubmit} class="btn btn-primary">check out</button>
         <br />
 
-        <button style={{backgroundColor:'white'}}  onClick={() => navigate('/projects')}> Back to projects</button>
+        <button  onClick={() => navigate('/projects', {replace:true, state:{'username': location.state.username} })} class="btn btn-primary"> Back to projects</button>
         {openpopup && <Popup
           content={<>
             <p> Quantity cannot be zero, enter quantity again to check-in/out </p>

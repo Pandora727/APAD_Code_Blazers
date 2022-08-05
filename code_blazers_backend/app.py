@@ -80,10 +80,9 @@ def check_out():
     return json.dumps({"state":res,"hwdata":HWData, "project_details": project_details})
 
 
-# Home page
-@app.route('/Home', methods=['GET'])
+@app.route('/')
 def index():
-    return 'This is the home page'
+    return app.send_static_file('index.html')
 
 
 # sign up page
@@ -101,9 +100,10 @@ def signup():
 def login():
     if request.method == 'POST':
         data = request.get_json()
-        newuser=Login()
-        state = newuser.validate_login(data)
+        userlogin = Login()
+        state = userlogin.validate_login(data)
         return json.dumps({'state':state})
+
  
 
 

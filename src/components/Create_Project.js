@@ -38,7 +38,7 @@ const Create_Project = () => {
           .then(response => response.json())
           .then(data => (data.state !==0) ? setpopup_open(!popup_open):
                                              navigate('/projects/hardware_management_page',
-                                             {replace:true, state:{'project_id':project_id} }))
+                                             {replace:true, state:{'project_id':project_id, 'username': location.state.username} }))
         console.log(pj_state, popup_open);
         setProjectid('') 
         setProjectname('')
@@ -80,7 +80,7 @@ const Create_Project = () => {
         onChange={(e) => setProjectdesc(e.target.value)}
         />
         <br />
-        <button onClick={handleClick} >
+        <button onClick={handleClick} class="btn btn-primary">
             submit            
         </button>
         {pj_state=== 0 && popup_open &&<Popup

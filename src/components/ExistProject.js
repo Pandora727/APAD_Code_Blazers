@@ -12,8 +12,6 @@ const ExistProject = () => {
   const navigate = useNavigate();
 
   const location = useLocation();
-  const username = location.state.username;
-  console.log(username);
 
   function handlesubmit(e) {
         e.preventDefault();  
@@ -30,7 +28,7 @@ const ExistProject = () => {
           })    
             .then(response => response.json())
             .then(data => data.flag ? navigate('/projects/hardware_management_page',
-                                               {replace:true, state:{'project_id':project_id} }): setIsopen(true))
+                                               {replace:true, state:{'project_id':project_id, 'username': location.state.username} }): setIsopen(true))
 
         }    
 
@@ -51,7 +49,7 @@ const ExistProject = () => {
     <input name="project_id" type="text" value={project_id} 
       onChange={(e) => setProjectid(e.target.value)}/>
     <br/>
-    <button type="submit" onClick={handlesubmit}>
+    <button type="submit" onClick={handlesubmit} class="btn btn-primary">
         submit
     </button>   
     {state ===0 && isOpen && <Popup
@@ -65,7 +63,7 @@ const ExistProject = () => {
       </>}
       handleClose={togglePopup}/>}
     <br />
-    <Link to={"/projects/create_new_project"} state={{username: username}} style={{ 
+    <Link to={"/projects/create_new_project"} state={{username: location.state.username}} style={{ 
           color: 'black', 
           borderRadius: '8px' 
         }}>create new Project</Link>

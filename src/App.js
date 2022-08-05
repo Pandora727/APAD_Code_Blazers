@@ -5,6 +5,7 @@ import Navbar from './components/Navbar';
 import Home from './components/Home';
 import User from './components/User';
 import Login from './components/Login';
+import DirectBack from './components/DirectBack';
 
 import React from 'react'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
@@ -23,6 +24,7 @@ function App() {
           <Route path="/projects/create_new_project" element={<Create_Project/>} />
           <Route path="/projects/hardware_management_page" element={<Hardware_Management />} />
           <Route path="/home/" element={<ExistProject/>} />
+          <Route path='/redirect' element={<DirectBack />} />
           {/* <Route path="/home/" element={<ExistProject/>} /> */}
           </Routes>
         </div>
