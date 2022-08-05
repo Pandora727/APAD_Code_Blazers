@@ -1,11 +1,11 @@
 from tracemalloc import start
 from flask import Flask, request,send_from_directory
-from project_execute import project_access, create_new_project, get_project_info, update_checkin_checkout
-from hardware import hardware
-from hardware_execute import get_hardware_data,checkIn_qty,checkOut_qty,get_hw_availability
-from login import Login 
+from code_blazers_backend.project_execute import project_access, create_new_project, get_project_info, update_checkin_checkout
+from code_blazers_backend.hardware import hardware
+from code_blazers_backend.hardware_execute import get_hardware_data,checkIn_qty,checkOut_qty,get_hw_availability
+from code_blazers_backend.login import Login 
 from bson import ObjectId
-from user import User
+from code_blazers_backend.user import User
 import json
 import sys
 import time
@@ -81,8 +81,8 @@ def check_out():
 
 
 @app.route('/')
-def index():
-    return app.send_static_file('index.html')
+def serve():
+    return send_from_directory(app.static_folder, 'index.html')
 
 
 # sign up page
