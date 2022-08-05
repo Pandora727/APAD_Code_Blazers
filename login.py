@@ -28,8 +28,8 @@ class Login:
 
             if (document['password'] == pwd):
                 return 0
-            return 1
-        return 2
+            return 2
+        return 3
 
             
 

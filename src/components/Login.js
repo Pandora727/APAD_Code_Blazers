@@ -1,16 +1,16 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import Popup from './Popup';
 import { useNavigate, Link } from 'react-router-dom';
 
 
 function Login() {
-    const inputName = useRef(null)
-    const inputPass = useRef(null)
+    const [inputName, setinputName] = useState('');
+    const [inputPass, setinputPass] = useState('');
     const [popup_open, setpopup_open] = useState(false);
     const [request_state, setRequest] = useState(0);
     const navigate = useNavigate();
 
-    
+
     const togglePopup = () => {
         setpopup_open(!popup_open);
         setRequest(0);
@@ -21,17 +21,18 @@ function Login() {
     function handleLogin(event) {
         //To prevent the infinite loop error
         event.preventDefault();
-        var user = inputName.current.value
-        var pass = inputPass.current.value
+        // var user = inputName.current.value
+        // var pass = inputPass.current.value
 
         //Input Validation, prevent proceed if both fields are not filled out
-        if (user === '' || pass === '') {
+        if (inputName.trim() === '' || inputPass.trim() === '') {
             //Print error message
-            setRequest(request_state + 1);
+            setRequest(1);
             setpopup_open(!popup_open);
         }
 
-        if (request_state === 0) {
+        else {
+            console.log("reach here")
             //Send to login request to backend
             fetch('/loginrequest',
                 {
@@ -41,13 +42,13 @@ function Login() {
                         'Content-Type': 'application/json',
                         'Accept': 'application/json'
                     },
-                    body: JSON.stringify({"username": user,"password": pass})
+                    body: JSON.stringify({ "username": inputName, "password": inputPass })
                 }
             )
                 .then(response => response.json())
-                
+
                 // TODO: CHANGE THE NAVIGATE TO EXISTING PROJECT
-                .then(data => (data.state !== 0) ? setpopup_open(!popup_open) : navigate('/Home'))
+                .then(data => (data.state !== 0) ? [setpopup_open(!popup_open), setRequest(data.state)] : navigate('/Home'))
         }
 
     }
@@ -62,20 +63,29 @@ function Login() {
                     <h4>Existing User Login </h4>
                     Username:
                     <br></br>
-                    <input type="text" ref={inputName} />
+                    <input type="text" value={inputName} onChange={(e) => setinputName(e.target.value)}/>
                     <br></br>
                     Password:
                     <br></br>
-                    <input type="Password" ref={inputPass} />
+                    <input type="Password" value={inputPass} onChange={(e) => setinputPass(e.target.value)} />
                     <br></br>
-                    <Link to="/signup" > New User? Sign up </Link> 
-                    <br/>
+                    <Link to="/signup" > New User? Sign up </Link>
+                    <br />
                     <button type="submit" class="btn btn-primary"> Login </button>
-                    {request_state === 0 && popup_open && <Popup
+                    {request_state === 1 && popup_open && <Popup
                         content={<>
                             <p>Please fill out both the username and password </p>
-                            <p>The username and password should match</p>
                         </>} handleClose={togglePopup} />}
+                    {request_state === 2 && popup_open && <Popup
+                        content={<>
+                            <p> Incorrect password </p>
+                        </>} handleClose={togglePopup} />}
+
+                    {request_state === 3 && popup_open && <Popup
+                        content={<>
+                            <p> UserID doesn't exist </p>
+                        </>} handleClose={togglePopup} />}
+
                 </form>
                 <p>
 
